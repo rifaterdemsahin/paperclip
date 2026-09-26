@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paperclip — Multi-Agent Orchestration for Hermes, Grokbot, ChatGPT & Claude</title>
+  <meta name="description" content="Discover why Paperclip is the ultimate orchestration control plane uniting Hermes, Grokbot, ChatGPT, Claude Cowork, and multi-model agent teams into an accountable AI organization.">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+              900: '#0c4a6e',
+            },
+            paperclip: {
+              accent: '#38bdf8',
+              surface: '#0f172a',
+              card: '#1e293b',
+              border: '#334155'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.05); }
+    }
+    .glow-bg {
+      animation: pulseGlow 8s ease-in-out infinite;
+    }
+    .code-gradient {
+      background: linear-gradient(180deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%);
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans selection:bg-sky-500 selection:text-white">
+
+  <!-- Background decorative light blooms -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-sky-500/20 rounded-full blur-3xl glow-bg"></div>
+    <div class="absolute top-1/3 -right-40 w-96 h-96 bg-purple-500/15 rounded-full blur-3xl glow-bg" style="animation-delay: 2s;"></div>
+    <div class="absolute -bottom-40 left-1/3 w-96 h-96 bg-emerald-500/15 rounded-full blur-3xl glow-bg" style="animation-delay: 4s;"></div>
+  </div>
+
+  <div class="relative z-10 flex flex-col min-h-screen">
+
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-slate-950/80 border-b border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <a href="#top" class="flex items-center space-x-3 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-sky-500/30 group-hover:scale-105 transition-transform">
+            <i class="fa-solid fa-paperclip text-lg -rotate-45"></i>
+          </div>
+          <div>
+            <span class="text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-sky-400 via-indigo-300 to-purple-400">Paperclip</span>
+            <span class="text-xs px-2 py-0.5 ml-2 rounded-full bg-sky-950 border border-sky-700/50 text-sky-300 font-medium">Orchestrator</span>
+          </div>
+        </a>
+
+        <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
+          <a href="#why-paperclip" class="hover:text-sky-400 transition-colors">Why Paperclip</a>
+          <a href="#agent-synergy" class="hover:text-sky-400 transition-colors">Agent Ecosystem</a>
+          <a href="#simulator" class="hover:text-sky-400 transition-colors">Live Simulation</a>
+          <a href="#how-to" class="hover:text-sky-400 transition-colors">How It Works</a>
+          <a href="#comparison" class="hover:text-sky-400 transition-colors">Comparison</a>
+        </nav>
+
+        <div class="flex items-center space-x-3">
+          <a href="https://github.com/rifaterdemsahin/paperclip" target="_blank" rel="noopener noreferrer" class="px-4 py-2 text-sm font-semibold rounded-lg bg-slate-900 border border-slate-700 hover:border-sky-500 text-slate-200 hover:text-white transition-all flex items-center space-x-2">
+            <i class="fa-brands fa-github text-base"></i>
+            <span>GitHub</span>
+          </a>
+          <a href="#how-to" class="hidden sm:inline-flex px-4 py-2 text-sm font-semibold rounded-lg bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white shadow-md shadow-sky-500/20 transition-all">
+            Get Started
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="flex-grow">
+      <section id="top" class="pt-20 pb-16 lg:pt-28 lg:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
+        <!-- Pill Badge -->
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/90 border border-sky-500/30 text-sky-300 text-xs sm:text-sm font-medium mb-8 backdrop-blur-md">
+          <span class="flex h-2 w-2 rounded-full bg-sky-400 animate-ping"></span>
+          <span>Unified Control Plane for Autonomous Multi-Agent Teams</span>
+        </div>
+
+        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-5xl mx-auto leading-tight sm:leading-none">
+          Why Use <span class="bg-clip-text text-transparent bg-gradient-to-r from-sky-400 via-indigo-400 to-purple-400">Paperclip</span> to Orchestrate Hermes & Grokbot?
+        </h1>
+
+        <p class="mt-6 text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
+          Bring <strong class="text-sky-300 font-semibold">ChatGPT's</strong> strategic planning, <strong class="text-orange-300 font-semibold">Claude's</strong> collaborative coding, <strong class="text-emerald-300 font-semibold">Hermes'</strong> autonomous memory runtime, and <strong class="text-red-300 font-semibold">Grokbot's</strong> high-speed dialectic debate into one cohesive AI enterprise.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+          <a href="#simulator" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white font-semibold text-base shadow-xl shadow-sky-500/25 transition-all flex items-center space-x-2">
+            <i class="fa-solid fa-play text-xs"></i>
+            <span>Try Interactive Agent Simulator</span>
+          </a>
+          <a href="#how-to" class="px-6 py-3.5 rounded-xl bg-slate-900 border border-slate-700 hover:border-slate-500 text-slate-200 font-semibold text-base transition-all flex items-center space-x-2">
+            <i class="fa-solid fa-terminal text-xs text-sky-400"></i>
+            <span>Step-by-Step Setup Guide</span>
+          </a>
+        </div>
+
+        <!-- Ecosystem Logos / Badges -->
+        <div class="mt-16 pt-8 border-t border-slate-800/80 max-w-4xl mx-auto">
+          <p class="text-xs uppercase tracking-widest text-slate-500 font-semibold mb-6">Orchestrating Leading Models & Autonomous Agent Runtimes</p>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800/80 flex items-center justify-center space-x-2.5">
+              <i class="fa-solid fa-brain text-emerald-400 text-lg"></i>
+              <span class="text-sm font-medium text-slate-300">Hermes Agent</span>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800/80 flex items-center justify-center space-x-2.5">
+              <i class="fa-solid fa-bolt text-red-400 text-lg"></i>
+              <span class="text-sm font-medium text-slate-300">Grokbot (xAI)</span>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800/80 flex items-center justify-center space-x-2.5">
+              <i class="fa-solid fa-network-wired text-sky-400 text-lg"></i>
+              <span class="text-sm font-medium text-slate-300">ChatGPT (OpenAI)</span>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800/80 flex items-center justify-center space-x-2.5">
+              <i class="fa-solid fa-code-compare text-amber-400 text-lg"></i>
+              <span class="text-sm font-medium text-slate-300">Claude Cowork</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Why Paperclip (The Problem & Solution) -->
+      <section id="why-paperclip" class="py-20 bg-slate-900/40 border-y border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center max-w-3xl mx-auto mb-16">
+            <h2 class="text-xs font-bold uppercase tracking-widest text-sky-400">The Multi-Agent Paradigm</h2>
+            <p class="mt-2 text-3xl sm:text-4xl font-extrabold text-white">Why Single-Agent Scripts Fail At Scale</p>
+            <p class="mt-4 text-slate-400 leading-relaxed">
+              When developers attempt to build real-world AI applications, running independent CLI tools or ad-hoc API wrappers causes chaos. Paperclip solves this by acting as the organizational operating system for autonomous workers.
+            </p>
+          </div>
+
+          <!-- 3 Pillars Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Pillar 1 -->
+            <div class="rounded-2xl p-8 bg-slate-900/80 border border-slate-800 hover:border-sky-500/50 transition-all group">
+              <div class="w-14 h-14 rounded-xl bg-sky-500/10 border border-sky-500/20 text-sky-400 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                <i class="fa-solid fa-sitemap"></i>
+              </div>
+              <h3 class="text-xl font-bold text-white mb-3">Agent Org Chart & Roles</h3>
+              <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                Instead of flat chats, Paperclip assigns explicit hierarchy: executive planners, execution workers, dialectic critics, and QA reviewers. Agents know who to report to and who approves their work.
+              </p>
+              <ul class="text-xs space-y-2 text-slate-300">
+                <li class="flex items-center"><i class="fa-solid fa-check text-sky-400 mr-2"></i> Role-based task delegation</li>
+                <li class="flex items-center"><i class="fa-solid fa-check text-sky-400 mr-2"></i> Structured handoffs & deliverables</li>
+                <li class="flex items-center"><i class="fa-solid fa-check text-sky-400 mr-2"></i> Clear escalation paths</li>
+              </ul>
+            </div>
+
+            <!-- Pillar 2 -->
+            <div class="rounded-2xl p-8 bg-slate-900/80 border border-slate-800 hover:border-purple-500/50 transition-all group">
+              <div class="w-14 h-14 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                <i class="fa-solid fa-shield-halved"></i>
+              </div>
+              <h3 class="text-xl font-bold text-white mb-3">Governance, Budgets & Safety</h3>
+              <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                Prevent rogue loops and ballooning API bills. Paperclip injects token budgets, financial caps per agent, human-in-the-loop approval gates, and step-level audit trails.
+              </p>
+              <ul class="text-xs space-y-2 text-slate-300">
+                <li class="flex items-center"><i class="fa-solid fa-check text-purple-400 mr-2"></i> Hard token & spend ceilings</li>
+                <li class="flex items-center"><i class="fa-solid fa-check text-purple-400 mr-2"></i> Human approval before critical actions</li>
+                <li class="flex items-center"><i class="fa-solid fa-check text-purple-400 mr-2"></i> Immutable event logs & replays</li>
+              </ul>
+            </div>
+
+            <!-- Pillar 3 -->
+            <div class="rounded-2xl p-8 bg-slate-900/80 border border-slate-800 hover:border-emerald-500/50 transition-all group">
+              <div class="w-14 h-14 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                <i class="fa-solid fa-arrows-split-up-and-left"></i>
+              </div>
+              <h3 class="text-xl font-bold text-white mb-3">Heterogeneous Model Harmony</h3>
+              <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                No single LLM is best at everything. Paperclip leverages Hermes for persistent memory, Grokbot for rapid contrarian consensus, ChatGPT for structure, and Claude for codebase synthesis.
+              </p>
+              <ul class="text-xs space-y-2 text-slate-300">
+                <li class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Universal adapter architecture</li>
+                <li class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Zero vendor lock-in</li>
+                <li class="flex items-center"><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Cross-model verification & consensus</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Detailed Agent Synergy -->
+      <section id="agent-synergy" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <h2 class="text-xs font-bold uppercase tracking-widest text-indigo-400">The Power of Complementary AI</h2>
+          <p class="mt-2 text-3xl sm:text-4xl font-extrabold text-white">How Hermes, Grokbot, ChatGPT & Claude Complement Each Other</p>
+          <p class="mt-4 text-slate-400 leading-relaxed">
+            Each agent model has unique superpowers. Paperclip connects their strengths into an asynchronous assembly line.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Hermes Agent Card -->
+          <div class="p-8 rounded-2xl bg-slate-900 border border-slate-800 relative overflow-hidden group hover:border-emerald-500/50 transition-all">
+            <div class="flex items-start justify-between">
+              <div>
+                <span class="text-xs font-semibold uppercase tracking-wider text-emerald-400 bg-emerald-950/60 border border-emerald-800/40 px-3 py-1 rounded-full">Autonomous Worker & Memory</span>
+                <h3 class="text-2xl font-bold text-white mt-3">Nous Research: Hermes Agent</h3>
+              </div>
+              <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl">
+                <i class="fa-solid fa-robot"></i>
+              </div>
+            </div>
+            <p class="mt-4 text-slate-300 text-sm leading-relaxed">
+              Hermes functions as the tireless hands-on employee in Paperclip. Equipped with long-term memory, self-learning loops that synthesize reusable skills, and deep tool use across bash, APIs, and file systems.
+            </p>
+            <div class="mt-6 pt-4 border-t border-slate-800/80">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Paperclip Role:</h4>
+              <p class="text-xs text-slate-300 bg-slate-950/60 p-3 rounded-lg border border-slate-800">
+                <strong>Lead Executor:</strong> Picks up tasks from the queue, executes code locally, remembers previous deployment quirks, and commits changes.
+              </p>
+            </div>
+          </div>
+
+          <!-- Grokbot Card -->
+          <div class="p-8 rounded-2xl bg-slate-900 border border-slate-800 relative overflow-hidden group hover:border-red-500/50 transition-all">
+            <div class="flex items-start justify-between">
+              <div>
+                <span class="text-xs font-semibold uppercase tracking-wider text-red-400 bg-red-950/60 border border-red-800/40 px-3 py-1 rounded-full">Speed, Search & Dialectic Debate</span>
+                <h3 class="text-2xl font-bold text-white mt-3">xAI: Grokbot</h3>
+              </div>
+              <div class="w-12 h-12 rounded-xl bg-red-500/10 text-red-400 flex items-center justify-center text-xl">
+                <i class="fa-solid fa-bolt-lightning"></i>
+              </div>
+            </div>
+            <p class="mt-4 text-slate-300 text-sm leading-relaxed">
+              Grok brings extreme inference speed, real-time knowledge synthesis, and an unapologetic contrarian perspective. With multi-agent internal consensus mechanisms, Grok detects false assumptions before work starts.
+            </p>
+            <div class="mt-6 pt-4 border-t border-slate-800/80">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Paperclip Role:</h4>
+              <p class="text-xs text-slate-300 bg-slate-950/60 p-3 rounded-lg border border-slate-800">
+                <strong>The Devil's Advocate & Real-Time Scout:</strong> Stress-tests architectures, verifies live external facts, and performs rapid dialectic debates against the team's initial assumptions.
+              </p>
+            </div>
+          </div>
+
+          <!-- ChatGPT Card -->
+          <div class="p-8 rounded-2xl bg-slate-900 border border-slate-800 relative overflow-hidden group hover:border-sky-500/50 transition-all">
+            <div class="flex items-start justify-between">
+              <div>
+                <span class="text-xs font-semibold uppercase tracking-wider text-sky-400 bg-sky-950/60 border border-sky-800/40 px-3 py-1 rounded-full">Strategic Planning & Schema Design</span>
+                <h3 class="text-2xl font-bold text-white mt-3">OpenAI: ChatGPT (o-Series & GPT-4o)</h3>
+              </div>
+              <div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center text-xl">
+                <i class="fa-solid fa-diagram-project"></i>
+              </div>
+            </div>
+            <p class="mt-4 text-slate-300 text-sm leading-relaxed">
+              OpenAI models excel at high-level goal decomposition, translating vague human intents into rigorous task specifications, structured JSON schemas, and milestone schedules.
+            </p>
+            <div class="mt-6 pt-4 border-t border-slate-800/80">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Paperclip Role:</h4>
+              <p class="text-xs text-slate-300 bg-slate-950/60 p-3 rounded-lg border border-slate-800">
+                <strong>Project Manager & Product Lead:</strong> Ingests the initial user objective, decomposes it into DAG (Directed Acyclic Graph) subtasks, and assigns them to Hermes and Claude.
+              </p>
+            </div>
+          </div>
+
+          <!-- Claude Cowork Card -->
+          <div class="p-8 rounded-2xl bg-slate-900 border border-slate-800 relative overflow-hidden group hover:border-amber-500/50 transition-all">
+            <div class="flex items-start justify-between">
+              <div>
+                <span class="text-xs font-semibold uppercase tracking-wider text-amber-400 bg-amber-950/60 border border-amber-800/40 px-3 py-1 rounded-full">Deep Context & Code Review</span>
+                <h3 class="text-2xl font-bold text-white mt-3">Anthropic: Claude Cowork (3.5 & 3.7)</h3>
+              </div>
+              <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl">
+                <i class="fa-solid fa-code-merge"></i>
+              </div>
+            </div>
+            <p class="mt-4 text-slate-300 text-sm leading-relaxed">
+              Claude offers unmatched long-context repository reasoning, elegant documentation authoring, and careful architectural critique with high fidelity and safety alignment.
+            </p>
+            <div class="mt-6 pt-4 border-t border-slate-800/80">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Paperclip Role:</h4>
+              <p class="text-xs text-slate-300 bg-slate-950/60 p-3 rounded-lg border border-slate-800">
+                <strong>Principal Code Reviewer & Coworker:</strong> Reviews diffs submitted by Hermes, identifies subtle edge-case bugs, writes documentation, and validates test coverage.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Interactive Simulator -->
+      <section id="simulator" class="py-20 bg-slate-900/60 border-y border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center max-w-3xl mx-auto mb-12">
+            <span class="text-xs font-bold uppercase tracking-widest text-sky-400 bg-sky-950 border border-sky-800/50 px-3 py-1 rounded-full">Interactive Demo</span>
+            <h2 class="mt-4 text-3xl sm:text-4xl font-extrabold text-white">Watch the Paperclip Agent Pipeline in Action</h2>
+            <p class="mt-3 text-slate-400">
+              Select a real-world task scenario and trigger the collaborative multi-agent execution pipeline.
+            </p>
+          </div>
+
+          <!-- Simulator Box -->
+          <div class="max-w-4xl mx-auto bg-slate-950 rounded-2xl border border-slate-800 shadow-2xl overflow-hidden">
+            <!-- Header bar -->
+            <div class="px-6 py-4 bg-slate-900/90 border-b border-slate-800 flex flex-wrap items-center justify-between gap-4">
+              <div class="flex items-center space-x-2">
+                <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
+                <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
+                <span class="text-xs font-mono text-slate-400 ml-2">paperclip-runtime // orchestrator-v2</span>
+              </div>
+              <div class="flex items-center space-x-3 text-xs">
+                <span class="text-slate-400">Budget: <strong class="text-emerald-400">$10.00 max</strong></span>
+                <span class="text-slate-500">|</span>
+                <span class="text-slate-400">Status: <strong id="sim-status" class="text-sky-400">Idle / Ready</strong></span>
+              </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="p-6 border-b border-slate-800/80 bg-slate-900/40">
+              <label class="block text-xs uppercase font-bold text-slate-400 tracking-wider mb-2">Select Task Objective</label>
+              <div class="flex flex-col sm:flex-row gap-3">
+                <select id="sim-task-select" class="flex-grow bg-slate-900 border border-slate-700 text-slate-200 text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-sky-500">
+                  <option value="feature">Task: Build & Secure New Payment Gateway Microservice</option>
+                  <option value="research">Task: Deep Multi-Source Market & Architecture Research</option>
+                  <option value="debug">Task: Debug High-Severity Memory Leak & Push Hotfix</option>
+                </select>
+                <button id="sim-run-btn" onclick="runSimulation()" class="px-6 py-3 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white font-semibold text-sm rounded-xl shadow-lg shadow-sky-500/20 transition-all flex items-center justify-center space-x-2">
+                  <i class="fa-solid fa-play"></i>
+                  <span>Dispatch Task</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Live Pipeline Stage Nodes -->
+            <div class="p-6">
+              <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-6">
+                <!-- Step 1: ChatGPT -->
+                <div id="stage-1" class="p-4 rounded-xl border border-slate-800 bg-slate-900/60 transition-all">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-mono font-bold text-sky-400">1. ChatGPT</span>
+                    <i class="fa-solid fa-compass text-slate-500 text-xs"></i>
+                  </div>
+                  <p class="text-xs text-slate-400">Plan & DAG Schema</p>
+                  <div class="mt-3 flex items-center text-xs text-slate-500">
+                    <span class="stage-badge text-slate-500">Pending</span>
+                  </div>
+                </div>
+
+                <!-- Step 2: Grokbot -->
+                <div id="stage-2" class="p-4 rounded-xl border border-slate-800 bg-slate-900/60 transition-all">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-mono font-bold text-red-400">2. Grokbot</span>
+                    <i class="fa-solid fa-bolt text-slate-500 text-xs"></i>
+                  </div>
+                  <p class="text-xs text-slate-400">Contrarian Critique</p>
+                  <div class="mt-3 flex items-center text-xs text-slate-500">
+                    <span class="stage-badge text-slate-500">Pending</span>
+                  </div>
+                </div>
+
+                <!-- Step 3: Hermes -->
+                <div id="stage-3" class="p-4 rounded-xl border border-slate-800 bg-slate-900/60 transition-all">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-mono font-bold text-emerald-400">3. Hermes</span>
+                    <i class="fa-solid fa-hammer text-slate-500 text-xs"></i>
+                  </div>
+                  <p class="text-xs text-slate-400">Code Execution</p>
+                  <div class="mt-3 flex items-center text-xs text-slate-500">
+                    <span class="stage-badge text-slate-500">Pending</span>
+                  </div>
+                </div>
+
+                <!-- Step 4: Claude -->
+                <div id="stage-4" class="p-4 rounded-xl border border-slate-800 bg-slate-900/60 transition-all">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-mono font-bold text-amber-400">4. Claude</span>
+                    <i class="fa-solid fa-circle-check text-slate-500 text-xs"></i>
+                  </div>
+                  <p class="text-xs text-slate-400">Review & Cowork</p>
+                  <div class="mt-3 flex items-center text-xs text-slate-500">
+                    <span class="stage-badge text-slate-500">Pending</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Terminal Stream Log -->
+              <div class="rounded-xl bg-slate-950 p-4 border border-slate-800 font-mono text-xs text-slate-300 h-56 overflow-y-auto space-y-2" id="sim-terminal">
+                <div class="text-slate-600">// Ready. Click "Dispatch Task" to initiate Paperclip agent orchestration...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: How-To Guide (Step-by-Step on Paperclip) -->
+      <section id="how-to" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <h2 class="text-xs font-bold uppercase tracking-widest text-sky-400">Implementation Blueprint</h2>
+          <p class="mt-2 text-3xl sm:text-4xl font-extrabold text-white">How to Set Up & Run Paperclip</p>
+          <p class="mt-4 text-slate-400 leading-relaxed">
+            Follow this practical 4-step guide to assemble your multi-agent workforce and publish your project pages.
+          </p>
+        </div>
+
+        <div class="space-y-8 max-w-4xl mx-auto">
+
+          <!-- Step 1 -->
+          <div class="p-6 sm:p-8 rounded-2xl bg-slate-900 border border-slate-800">
+            <div class="flex items-center space-x-4 mb-4">
+              <span class="w-8 h-8 rounded-full bg-sky-500/20 text-sky-400 font-bold flex items-center justify-center border border-sky-500/40 text-sm">1</span>
+              <h3 class="text-xl font-bold text-white">Install Paperclip & Initialize Workspace</h3>
+            </div>
+            <p class="text-sm text-slate-400 mb-4">
+              Install the Paperclip CLI or deploy the control plane container. Initialize your project directory with default governance policies.
+            </p>
+            <div class="relative bg-slate-950 rounded-xl p-4 border border-slate-800 text-xs font-mono text-slate-200">
+              <div class="flex justify-between items-center text-slate-500 pb-2 mb-2 border-b border-slate-800 text-[11px]">
+                <span>Terminal (Shell)</span>
+                <button onclick="copySnippet(this, 'cli-init')" class="hover:text-sky-400 flex items-center space-x-1">
+                  <i class="fa-regular fa-copy"></i>
+                  <span>Copy</span>
+                </button>
+              </div>
+              <pre id="cli-init" class="overflow-x-auto text-emerald-400"><code># Install Paperclip Control Plane
+npm install -g paperclip-ai
+
+# Or run via Docker
+docker run -d -p 30080:3000 --name paperclip ghcr.io/paperclip/control-plane:latest
+
+# Initialize workspace inside repository
+paperclip init --org "Autonomous Core"</code></pre>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="p-6 sm:p-8 rounded-2xl bg-slate-900 border border-slate-800">
+            <div class="flex items-center space-x-4 mb-4">
+              <span class="w-8 h-8 rounded-full bg-sky-500/20 text-sky-400 font-bold flex items-center justify-center border border-sky-500/40 text-sm">2</span>
+              <h3 class="text-xl font-bold text-white">Configure the Agent Org Chart (`paperclip.yaml`)</h3>
+            </div>
+            <p class="text-sm text-slate-400 mb-4">
+              Define the roster of workers, their runtime adapters (Nous Hermes, xAI Grok, OpenAI ChatGPT, Anthropic Claude), spend budgets, and approval gates.
+            </p>
+            <div class="relative bg-slate-950 rounded-xl p-4 border border-slate-800 text-xs font-mono text-slate-200">
+              <div class="flex justify-between items-center text-slate-500 pb-2 mb-2 border-b border-slate-800 text-[11px]">
+                <span>paperclip.yaml</span>
+                <button onclick="copySnippet(this, 'yaml-config')" class="hover:text-sky-400 flex items-center space-x-1">
+                  <i class="fa-regular fa-copy"></i>
+                  <span>Copy</span>
+                </button>
+              </div>
+              <pre id="yaml-config" class="overflow-x-auto text-sky-300"><code>version: "2.0"
+organization:
+  name: "Autonomous Engineering Team"
+  budget_limit_usd: 50.00
+  approval_mode: "human_for_critical"
+
+agents:
+  - id: "chatgpt-lead"
+    name: "Architect & Planner"
+    adapter: "openai"
+    model: "gpt-4o"
+    role: "leader"
+    can_delegate_to: ["hermes-builder", "grok-critic"]
+
+  - id: "grok-critic"
+    name: "Grok Dialectic Scout"
+    adapter: "xai"
+    model: "grok-2"
+    role: "critic"
+    temperature: 0.7
+
+  - id: "hermes-builder"
+    name: "Hermes Autonomous Worker"
+    adapter: "hermes-runtime"
+    model: "hermes-3-llama-3.1"
+    role: "executor"
+    memory_store: "./.paperclip/hermes-memory"
+    tools: ["bash", "file_writer", "git"]
+
+  - id: "claude-cowork"
+    name: "Claude Code Reviewer"
+    adapter: "anthropic"
+    model: "claude-3-7-sonnet"
+    role: "qa_reviewer"
+    must_approve: ["code_diffs", "security_audits"]</code></pre>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="p-6 sm:p-8 rounded-2xl bg-slate-900 border border-slate-800">
+            <div class="flex items-center space-x-4 mb-4">
+              <span class="w-8 h-8 rounded-full bg-sky-500/20 text-sky-400 font-bold flex items-center justify-center border border-sky-500/40 text-sm">3</span>
+              <h3 class="text-xl font-bold text-white">Dispatch Multi-Agent Tasks with Heartbeats</h3>
+            </div>
+            <p class="text-sm text-slate-400 mb-4">
+              Trigger autonomous tasks through CLI or webhook. Paperclip manages heartbeats, monitors agent health, handles retry logic, and logs structured state.
+            </p>
+            <div class="relative bg-slate-950 rounded-xl p-4 border border-slate-800 text-xs font-mono text-slate-200">
+              <div class="flex justify-between items-center text-slate-500 pb-2 mb-2 border-b border-slate-800 text-[11px]">
+                <span>Dispatch Command</span>
+                <button onclick="copySnippet(this, 'cli-run')" class="hover:text-sky-400 flex items-center space-x-1">
+                  <i class="fa-regular fa-copy"></i>
+                  <span>Copy</span>
+                </button>
+              </div>
+              <pre id="cli-run" class="overflow-x-auto text-amber-300"><code># Dispatch a feature build task across the agent org chart
+paperclip dispatch \
+  --goal "Build landing page index.html with interactive multi-agent guide" \
+  --lead "chatgpt-lead" \
+  --budget 2.50 \
+  --notify-slack "#agent-ops"
+
+# Inspect active agents, state, and cost burn rate
+paperclip status --live</code></pre>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="p-6 sm:p-8 rounded-2xl bg-slate-900 border border-slate-800">
+            <div class="flex items-center space-x-4 mb-4">
+              <span class="w-8 h-8 rounded-full bg-sky-500/20 text-sky-400 font-bold flex items-center justify-center border border-sky-500/40 text-sm">4</span>
+              <h3 class="text-xl font-bold text-white">Git Commit, Push & Enable GitHub Pages</h3>
+            </div>
+            <p class="text-sm text-slate-400 mb-4">
+              Deploy your generated documentation or web app directly to GitHub Pages so your team and the world can access it immediately.
+            </p>
+            <div class="relative bg-slate-950 rounded-xl p-4 border border-slate-800 text-xs font-mono text-slate-200">
+              <div class="flex justify-between items-center text-slate-500 pb-2 mb-2 border-b border-slate-800 text-[11px]">
+                <span>Git & GitHub Pages Workflow</span>
+                <button onclick="copySnippet(this, 'cli-git')" class="hover:text-sky-400 flex items-center space-x-1">
+                  <i class="fa-regular fa-copy"></i>
+                  <span>Copy</span>
+                </button>
+              </div>
+              <pre id="cli-git" class="overflow-x-auto text-purple-300"><code># Stage and commit generated documentation
+git add index.html
+git commit -m "feat: add Paperclip multi-agent orchestration architecture documentation"
+git push origin main
+
+# Enable GitHub Pages via GitHub CLI (gh)
+gh repo edit --enable-pages --pages-branch main --pages-path /
+
+# Your page is live at:
+# https://&lt;username&gt;.github.io/&lt;repo&gt;/</code></pre>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Section: Comparison Matrix -->
+      <section id="comparison" class="py-20 bg-slate-900/40 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center max-w-3xl mx-auto mb-16">
+            <h2 class="text-xs font-bold uppercase tracking-widest text-emerald-400">Architecture Evaluation</h2>
+            <p class="mt-2 text-3xl sm:text-4xl font-extrabold text-white">Paperclip vs Traditional Agent Approaches</p>
+            <p class="mt-4 text-slate-400 leading-relaxed">
+              See why an orchestration control plane is essential when moving from isolated toys to production agent teams.
+            </p>
+          </div>
+
+          <div class="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-900/60 shadow-xl">
+            <table class="w-full text-left text-xs sm:text-sm text-slate-300">
+              <thead class="bg-slate-900 text-slate-400 text-xs uppercase tracking-wider border-b border-slate-800">
+                <tr>
+                  <th scope="col" class="py-4 px-6 font-bold">Feature / Capability</th>
+                  <th scope="col" class="py-4 px-6 text-sky-400 font-bold bg-sky-950/40 border-x border-slate-800">Paperclip Control Plane</th>
+                  <th scope="col" class="py-4 px-6 font-semibold">Standalone Agent CLI (Hermes only)</th>
+                  <th scope="col" class="py-4 px-6 font-semibold">Ad-Hoc API Scripts</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800/60">
+                <tr class="hover:bg-slate-850/50">
+                  <td class="py-4 px-6 font-medium text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-users-gear text-sky-400"></i>
+                    <span>Org Chart & Reporting Lines</span>
+                  </td>
+                  <td class="py-4 px-6 text-emerald-400 font-semibold bg-sky-950/20 border-x border-slate-800">
+                    <i class="fa-solid fa-circle-check mr-2"></i>Native Org Chart, roles & escalation
+                  </td>
+                  <td class="py-4 px-6 text-slate-400">Single agent persona only</td>
+                  <td class="py-4 px-6 text-red-400"><i class="fa-solid fa-circle-xmark mr-2"></i>None (Flat / hardcoded)</td>
+                </tr>
+
+                <tr class="hover:bg-slate-850/50">
+                  <td class="py-4 px-6 font-medium text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-cubes text-purple-400"></i>
+                    <span>Heterogeneous Multi-Model Support</span>
+                  </td>
+                  <td class="py-4 px-6 text-emerald-400 font-semibold bg-sky-950/20 border-x border-slate-800">
+                    <i class="fa-solid fa-circle-check mr-2"></i>Hermes + Grok + GPT + Claude
+                  </td>
+                  <td class="py-4 px-6 text-slate-400">Tied to single model / runtime</td>
+                  <td class="py-4 px-6 text-slate-400">Custom boilerplate per provider</td>
+                </tr>
+
+                <tr class="hover:bg-slate-850/50">
+                  <td class="py-4 px-6 font-medium text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-comments text-amber-400"></i>
+                    <span>Dialectic Debate & Consensus</span>
+                  </td>
+                  <td class="py-4 px-6 text-emerald-400 font-semibold bg-sky-950/20 border-x border-slate-800">
+                    <i class="fa-solid fa-circle-check mr-2"></i>Automated cross-model critique
+                  </td>
+                  <td class="py-4 px-6 text-slate-400">Self-reflection only (echo chamber)</td>
+                  <td class="py-4 px-6 text-red-400"><i class="fa-solid fa-circle-xmark mr-2"></i>Difficult to maintain</td>
+                </tr>
+
+                <tr class="hover:bg-slate-850/50">
+                  <td class="py-4 px-6 font-medium text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-wallet text-emerald-400"></i>
+                    <span>Cost Ceilings & Token Governance</span>
+                  </td>
+                  <td class="py-4 px-6 text-emerald-400 font-semibold bg-sky-950/20 border-x border-slate-800">
+                    <i class="fa-solid fa-circle-check mr-2"></i>Hard limits per agent & task
+                  </td>
+                  <td class="py-4 px-6 text-slate-400">Manual monitoring</td>
+                  <td class="py-4 px-6 text-red-400"><i class="fa-solid fa-circle-xmark mr-2"></i>High risk of runaway loops</td>
+                </tr>
+
+                <tr class="hover:bg-slate-850/50">
+                  <td class="py-4 px-6 font-medium text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-clock-rotate-left text-blue-400"></i>
+                    <span>Heartbeats & Memory Persistence</span>
+                  </td>
+                  <td class="py-4 px-6 text-emerald-400 font-semibold bg-sky-950/20 border-x border-slate-800">
+                    <i class="fa-solid fa-circle-check mr-2"></i>Asynchronous heartbeat scheduler
+                  </td>
+                  <td class="py-4 px-6 text-slate-400">Hermes native memory only</td>
+                  <td class="py-4 px-6 text-red-400"><i class="fa-solid fa-circle-xmark mr-2"></i>Ephemeral context lost on crash</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-xs font-bold uppercase tracking-widest text-sky-400">Knowledge Base</h2>
+          <p class="mt-2 text-3xl font-extrabold text-white">Frequently Asked Questions</p>
+        </div>
+
+        <div class="space-y-4">
+          <details class="group p-5 rounded-xl bg-slate-900/80 border border-slate-800">
+            <summary class="flex justify-between items-center cursor-pointer font-semibold text-white">
+              <span>Why not just use ChatGPT or Claude alone?</span>
+              <i class="fa-solid fa-chevron-down text-slate-500 group-open:rotate-180 transition-transform"></i>
+            </summary>
+            <p class="mt-3 text-sm text-slate-300 leading-relaxed">
+              While individual models are exceptional, no single AI possesses all virtues: Hermes provides persistent skill learning and memory; Grokbot brings extreme speed and fresh counter-arguments; ChatGPT excels at high-level task decomposition; and Claude shines at deep architectural code reviews. Paperclip enables them to work like a cohesive engineering team where each specialist does what it does best.
+            </p>
+          </details>
+
+          <details class="group p-5 rounded-xl bg-slate-900/80 border border-slate-800">
+            <summary class="flex justify-between items-center cursor-pointer font-semibold text-white">
+              <span>How does Paperclip prevent runaway AI loops and exorbitant API costs?</span>
+              <i class="fa-solid fa-chevron-down text-slate-500 group-open:rotate-180 transition-transform"></i>
+            </summary>
+            <p class="mt-3 text-sm text-slate-300 leading-relaxed">
+              Paperclip implements strict budget caps at the organizational, team, and individual agent levels. If an agent exceeds its token budget or loops without producing valid artifact diffs, Paperclip's heartbeat supervisor pauses execution and requests human intervention.
+            </p>
+          </details>
+
+          <details class="group p-5 rounded-xl bg-slate-900/80 border border-slate-800">
+            <summary class="flex justify-between items-center cursor-pointer font-semibold text-white">
+              <span>Can I run local open-source models with Paperclip?</span>
+              <i class="fa-solid fa-chevron-down text-slate-500 group-open:rotate-180 transition-transform"></i>
+            </summary>
+            <p class="mt-3 text-sm text-slate-300 leading-relaxed">
+              Yes! Paperclip features adapters for Ollama, vLLM, Nous Hermes, Hugging Face TGI, and standard OpenAI-compatible endpoints alongside cloud providers (OpenAI, Anthropic, xAI, Google).
+            </p>
+          </details>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800/80 py-12 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center space-x-3">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center text-white">
+            <i class="fa-solid fa-paperclip -rotate-45 text-sm"></i>
+          </div>
+          <div>
+            <span class="text-base font-bold text-white">Paperclip</span>
+            <p class="text-xs text-slate-400">Multi-Agent Orchestration & Control Plane</p>
+          </div>
+        </div>
+
+        <p class="text-xs text-slate-500 text-center md:text-left">
+          Crafted by <a href="https://github.com/rifaterdemsahin" class="text-sky-400 hover:underline">Rifat Erdem Sahin</a> &bull; Deployed to GitHub Pages
+        </p>
+
+        <div class="flex items-center space-x-4 text-slate-400 text-sm">
+          <a href="https://github.com/rifaterdemsahin/paperclip" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors flex items-center space-x-1.5">
+            <i class="fa-brands fa-github"></i>
+            <span>Repository</span>
+          </a>
+          <a href="https://rifaterdemsahin.github.io/paperclip/" target="_blank" rel="noopener noreferrer" class="hover:text-sky-400 transition-colors flex items-center space-x-1.5">
+            <i class="fa-solid fa-globe"></i>
+            <span>Live Site</span>
+          </a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Interactive Simulator Script -->
+  <script>
+    function copySnippet(button, elementId) {
+      const code = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        const originalHTML = button.innerHTML;
+        button.innerHTML = '<i class="fa-solid fa-check text-emerald-400"></i><span class="text-emerald-400">Copied!</span>';
+        setTimeout(() => {
+          button.innerHTML = originalHTML;
+        }, 2000);
+      });
+    }
+
+    let isRunning = false;
+
+    function runSimulation() {
+      if (isRunning) return;
+      isRunning = true;
+
+      const taskSelect = document.getElementById('sim-task-select');
+      const selectedTask = taskSelect.options[taskSelect.selectedIndex].text;
+      const terminal = document.getElementById('sim-terminal');
+      const runBtn = document.getElementById('sim-run-btn');
+      const statusText = document.getElementById('sim-status');
+
+      runBtn.disabled = true;
+      runBtn.classList.add('opacity-50', 'cursor-not-allowed');
+      statusText.innerText = "Orchestrating Agents...";
+      statusText.className = "text-yellow-400 font-bold";
+
+      terminal.innerHTML = "";
+      resetStages();
+
+      function logMsg(prefix, text, colorClass) {
+        const time = new Date().toLocaleTimeString();
+        const line = document.createElement('div');
+        line.innerHTML = `<span class="text-slate-600">[${time}]</span> <span class="${colorClass} font-bold">${prefix}:</span> <span class="text-slate-300">${text}</span>`;
+        terminal.appendChild(line);
+        terminal.scrollTop = terminal.scrollHeight;
+      }
+
+      logMsg("PAPERCLIP CORE", `Initialized task dispatch for: "${selectedTask}"`, "text-sky-400");
+      logMsg("PAPERCLIP CORE", "Budget allocated: $2.50 max | Heartbeat rate: 1000ms", "text-slate-400");
+
+      // Stage 1: ChatGPT
+      setTimeout(() => {
+        setStageActive(1, "Planning...");
+        logMsg("CHATGPT LEAD", "Decomposing task into DAG milestones & data contract schemas.", "text-sky-400");
+      }, 700);
+
+      setTimeout(() => {
+        setStageComplete(1, "Plan Created");
+        logMsg("CHATGPT LEAD", "Milestones ready. Dispatched review request to Grokbot.", "text-sky-400");
+
+        // Stage 2: Grokbot
+        setStageActive(2, "Critiquing...");
+        logMsg("GROKBOT CRITIC", "Running contrarian dialectic check: analyzing race conditions & live API changes.", "text-red-400");
+      }, 2200);
+
+      setTimeout(() => {
+        setStageComplete(2, "Critique Done");
+        logMsg("GROKBOT CRITIC", "Edge cases detected in schema. Auto-patched payload structure. Handoff to Hermes.", "text-red-400");
+
+        // Stage 3: Hermes
+        setStageActive(3, "Executing...");
+        logMsg("HERMES BUILDER", "Autonomous runtime spinning up container. Injecting past learned skills.", "text-emerald-400");
+        logMsg("HERMES BUILDER", "Running bash commands, generating code diffs & mock tests.", "text-emerald-400");
+      }, 4000);
+
+      setTimeout(() => {
+        setStageComplete(3, "Code Written");
+        logMsg("HERMES BUILDER", "Diff generated (12 files touched, 0 errors). Handing off to Claude for QA.", "text-emerald-400");
+
+        // Stage 4: Claude
+        setStageActive(4, "Reviewing...");
+        logMsg("CLAUDE COWORK", "Deep repository context analysis underway. Auditing security & documentation.", "text-amber-400");
+      }, 6000);
+
+      setTimeout(() => {
+        setStageComplete(4, "Approved & Merged");
+        logMsg("CLAUDE COWORK", "Security checks passed (100% test coverage). Approved PR for merge.", "text-amber-400");
+
+        logMsg("PAPERCLIP CORE", "Task completed successfully! Total spend: $0.18 (Well within $2.50 limit).", "text-emerald-400");
+        statusText.innerText = "Task Finished (Success)";
+        statusText.className = "text-emerald-400 font-bold";
+
+        runBtn.disabled = false;
+        runBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        isRunning = false;
+      }, 7800);
+    }
+
+    function resetStages() {
+      for (let i = 1; i <= 4; i++) {
+        const stage = document.getElementById(`stage-${i}`);
+        stage.className = "p-4 rounded-xl border border-slate-800 bg-slate-900/60 transition-all";
+        const badge = stage.querySelector('.stage-badge');
+        badge.innerText = "Pending";
+        badge.className = "stage-badge text-slate-500";
+      }
+    }
+
+    function setStageActive(num, text) {
+      const stage = document.getElementById(`stage-${num}`);
+      stage.className = "p-4 rounded-xl border border-sky-500/80 bg-sky-950/30 transition-all shadow-md shadow-sky-500/10";
+      const badge = stage.querySelector('.stage-badge');
+      badge.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i>${text}`;
+      badge.className = "stage-badge text-sky-400 font-medium";
+    }
+
+    function setStageComplete(num, text) {
+      const stage = document.getElementById(`stage-${num}`);
+      stage.className = "p-4 rounded-xl border border-emerald-500/60 bg-emerald-950/20 transition-all";
+      const badge = stage.querySelector('.stage-badge');
+      badge.innerHTML = `<i class="fa-solid fa-check mr-1"></i>${text}`;
+      badge.className = "stage-badge text-emerald-400 font-medium";
+    }
+  </script>
+</body>
+</html>
